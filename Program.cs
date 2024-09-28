@@ -11,4 +11,31 @@ namespace JsonParser
             Console.WriteLine("Hello, World!");
         }
     }
+
+    public enum Token
+    {
+        OPENCURLY,
+        CLOSECURLY,
+        OPENSQUARE,
+        CLOSESQUARE,
+        OPENSINGLEQUOTE,
+        CLOSESINGLEQUOTE,
+        OPENDOUBLEQUOTE,
+        CLOSEDOUBLEQUOTE,
+        BOOL,
+        CHAR,
+        SPACE,
+        BACKSLASH,
+        NUMBER,
+        DECIMALPOINT
+    }
+
+    public static class JSONParser
+    {
+        public static List<Token> Tokenize(string json)
+        {
+
+        }
+
+    }
 }
