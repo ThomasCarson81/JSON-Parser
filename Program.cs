@@ -18,10 +18,8 @@ namespace JsonParser
         CLOSECURLY,
         OPENSQUARE,
         CLOSESQUARE,
-        OPENSINGLEQUOTE,
-        CLOSESINGLEQUOTE,
-        OPENDOUBLEQUOTE,
-        CLOSEDOUBLEQUOTE,
+        OPENSTRING,
+        CLOSESTRING,
         BOOL,
         CHAR,
         SPACE,
@@ -48,8 +46,9 @@ namespace JsonParser
 
             int currentCurlies = 0;
             int currentSquares = 0;
-            bool currentSingleQuotes = false;
-            bool currentDoubleQuotes = false;
+
+            bool isInString = false;
+            bool stringIsSingle = false;
 
             bool ignore = false;
 
@@ -68,26 +67,42 @@ namespace JsonParser
                 }
                 if (c == '"')
                 {
-                    if (currentDoubleQuotes)
+                    if (isInString)
                     {
-                        currentDoubleQuotes = false;
-                        tokens.Add(Token.CLOSEDOUBLEQUOTE);
+                        if (!stringIsSingle) // if string is made of ""
+                        {
+                            isInString = false;
+                            tokens.Add(Token.CLOSESTRING);
+                            continue;
+                        }
+                        // string is made of ''
+                        tokens.Add(Token.CHAR);
                         continue;
                     }
-                    tokens.Add(Token.OPENDOUBLEQUOTE);
-                    currentDoubleQuotes = true;
+                    // no active string, so start one
+                    tokens.Add(Token.OPENSTRING);
+                    stringIsSingle = false;
+                    isInString = true;
                     continue;
                 }
                 if (c == '\'')
                 {
-                    if (currentSingleQuotes)
+                    if (isInString)
                     {
-                        currentSingleQuotes = false;
-                        tokens.Add(Token.CLOSESINGLEQUOTE);
+                        if (stringIsSingle) // if string is made of ''
+                        {
+                            isInString = false;
+                            tokens.Add(Token.CLOSESTRING);
+                            continue;
+                        }
+                        // string is made of ""
+                        tokens.Add(Token.CHAR);
                         continue;
                     }
-                    tokens.Add(Token.OPENSINGLEQUOTE);
-                    currentSingleQuotes = true;
+                    // no active string, so start one
+                    tokens.Add(Token.OPENSTRING);
+                    stringIsSingle = true;
+                    isInString = true;
                     continue;
                 }
                 if (c == '{')
