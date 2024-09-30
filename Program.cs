@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 
@@ -43,6 +44,33 @@ namespace JsonParser
 
             return dict;
         }
+
+        //def lex(string):
+        //tokens = []
+
+        //while len(string) :
+        //    json_string, string = lex_string(string)
+        //    if json_string is not None:
+        //        tokens.append(json_string)
+        //        continue
+
+        //    # TODO: lex booleans, nulls, numbers
+
+        //    if string[0] in JSON_WHITESPACE:
+        //        string = string[1:]
+        //    elif string[0] in JSON_SYNTAX:
+        //        tokens.append(string[0])
+        //        string = string[1:]
+        //    else:
+        //        raise Exception('Unexpected character: {}'.format(string[0]))
+
+        //return tokens
+
+        public static List<string?> Lex(string str)
+        {
+            string?[] tokens = new string?[] { };
+        }
+
 
         public static List<Token> Tokenize(string json)
         {
