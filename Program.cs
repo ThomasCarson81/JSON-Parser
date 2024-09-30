@@ -2,7 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
-
 namespace JsonParser
 {
     internal class Program
@@ -38,39 +37,67 @@ namespace JsonParser
 
     public static class JSONParser
     {
+        public const char COMMA = ',';
+        public const char COLON = ':';
+        public const char LEFTBRACKET = '[';
+        public const char RIGHTBRACKET = ']';
+        public const char LEFTBRACE = '{';
+        public const char RIGHTBRACE = '}';
+        public const char QUOTE = '"';
+
+        public static readonly char[] WHITESPACE = [ ' ', '\t', '\b', '\n', '\r' ];
+        public static readonly char[] SYNTAX = [COMMA, COLON,  LEFTBRACKET, RIGHTBRACKET, LEFTBRACE, RIGHTBRACE];
+
+        public const int FALSE_LEN = 5;
+        public const int TRUE_LEN = 4;
+        public const int NULL_LEN = 4;
+
         public static Dictionary<string, object> Parse(string json)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
-
             return dict;
         }
 
-        //def lex(string):
-        //tokens = []
-
-        //while len(string) :
-        //    json_string, string = lex_string(string)
-        //    if json_string is not None:
-        //        tokens.append(json_string)
-        //        continue
-
-        //    # TODO: lex booleans, nulls, numbers
-
-        //    if string[0] in JSON_WHITESPACE:
-        //        string = string[1:]
-        //    elif string[0] in JSON_SYNTAX:
-        //        tokens.append(string[0])
-        //        string = string[1:]
-        //    else:
-        //        raise Exception('Unexpected character: {}'.format(string[0]))
-
-        //return tokens
-
         public static List<string?> Lex(string str)
         {
-            string?[] tokens = new string?[] { };
+            List<string?> tokens = new List<string?>();
+
+            string? jsonString;
+            string myString;
+
+            while (str.Length > 0)
+            {
+                (jsonString, myString) = LexString(str);
+
+                if (jsonString != null)
+                {
+                    tokens.Add(jsonString);
+                    continue;
+                }
+
+                //TODO: Lex Booleans, nulls, etc
+
+                if (WHITESPACE.Contains(myString[0]))
+                {
+                    myString = myString.Substring(1);
+                }
+                else if (SYNTAX.Contains(myString[0]))
+                {
+                    tokens.Add(Convert.ToString(myString[0]));
+                    myString = myString.Substring(1);
+                }
+                else
+                {
+                    throw new Exception($"Unexpected character: {myString[0]}");
+                }
+            }
+            return tokens;
         }
 
+        public static (string?, string) LexString(string str)
+        {
+            return (null, str);
+        }
 
         public static List<Token> Tokenize(string json)
         {
