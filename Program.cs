@@ -6,9 +6,15 @@ namespace JsonParser
 {
     internal class Program
     {
+        public static Dictionary<string, object> parsedObj = new Dictionary<string, object>();
+        public static string jsonString = "{ \"name\": \"John\", \"age\": 46, \"isMale\": true }";
         static void Main()
         {
-            Console.WriteLine("Hello, World!");
+            parsedObj = JSONParser.Parse(jsonString);
+            foreach (string key in parsedObj.Keys)
+            {
+                Console.WriteLine(key + ": " + parsedObj[key]);
+            }
         }
     }
 
@@ -25,11 +31,19 @@ namespace JsonParser
         SPACE,
         BACKSLASH,
         NUMBER,
-        DECIMALPOINT
+        DECIMALPOINT,
+        NULL
     }
 
     public static class JSONParser
     {
+        public static Dictionary<string, object> Parse(string json)
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            return dict;
+        }
+
         public static List<Token> Tokenize(string json)
         {
 
