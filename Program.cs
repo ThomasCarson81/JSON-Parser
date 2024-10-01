@@ -124,16 +124,16 @@ namespace JsonParser
         {
             int string_len = str.Length;
             if (string_len >= TRUE_LEN &&
-                str.Substring(TRUE_LEN, string_len - TRUE_LEN) == "true"
+                str.Substring(0, TRUE_LEN) == "true"
                )
             {
-                return (true, str.Substring(0, TRUE_LEN));
+                return (true, str.Substring(TRUE_LEN));
             }
             else if (string_len >= FALSE_LEN &&
-                     str.Substring(FALSE_LEN, string_len - FALSE_LEN) == "false"
+                     str.Substring(0, FALSE_LEN) == "false"
                     )
             {
-                return (false, str.Substring(0, FALSE_LEN));
+                return (false, str.Substring(FALSE_LEN));
             }
             return (null, str);
         }
@@ -169,10 +169,10 @@ namespace JsonParser
             int string_len = str.Length;
 
             if (string_len >= NULL_LEN && 
-                str.Substring(0,3) == "null"
+                str.Substring(0,NULL_LEN) == "null"
                )
             {
-                return (true, str.Substring(NULL_LEN, string_len - NULL_LEN));
+                return (true, str.Substring(NULL_LEN));
             }
             return (null, str);
         }
