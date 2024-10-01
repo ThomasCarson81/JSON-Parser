@@ -124,13 +124,32 @@ namespace JsonParser
         {
             return (null, str);
         }
-        public static (int?, string) LexInt(string str)
+        public static (float?, string, bool) LexNumber(string str)
         {
-            return (null, str);
-        }
-        public static (float?, string) LexFloat(string str)
-        {
-            return (null, str);
+            string jsonNumber = "";
+            char[] numberChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', 'e', '.'];
+            foreach (char c in str)
+            {
+                if (numberChars.Contains(c))
+                {
+                    jsonNumber += c;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            string rest = str.Substring(jsonNumber.Length);
+
+            if (jsonNumber.Length == 0)
+            {
+                return (null, str, false);
+            }
+            if (jsonNumber.Contains('.'))
+            {
+                return (Convert.ToSingle(jsonNumber), rest, false);
+            }
+            return (Convert.ToInt32(jsonNumber), rest, true);
         }
         public static (bool?, string) LexNull(string str)
         {
