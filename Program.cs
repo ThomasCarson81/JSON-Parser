@@ -166,6 +166,14 @@ namespace JsonParser
         }
         public static (bool?, string) LexNull(string str)
         {
+            int string_len = str.Length;
+
+            if (string_len >= NULL_LEN && 
+                str.Substring(0,3) == "null"
+               )
+            {
+                return (true, str.Substring(NULL_LEN, string_len - NULL_LEN));
+            }
             return (null, str);
         }
 
