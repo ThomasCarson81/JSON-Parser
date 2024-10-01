@@ -122,6 +122,19 @@ namespace JsonParser
         }
         public static (bool?, string) LexBool(string str)
         {
+            int string_len = str.Length;
+            if (string_len >= TRUE_LEN &&
+                str.Substring(TRUE_LEN, string_len - TRUE_LEN) == "true"
+               )
+            {
+                return (true, str.Substring(0, TRUE_LEN));
+            }
+            else if (string_len >= FALSE_LEN &&
+                     str.Substring(FALSE_LEN, string_len - FALSE_LEN) == "false"
+                    )
+            {
+                return (false, str.Substring(0, FALSE_LEN));
+            }
             return (null, str);
         }
         public static (float?, string, bool) LexNumber(string str)
