@@ -96,7 +96,29 @@ namespace JsonParser
 
         public static (string?, string) LexString(string str)
         {
-            return (null, str);
+            string jsonString = "";
+
+            if (str[0] == QUOTE)
+            {
+                str = str.Substring(1);
+            }
+            else 
+            {
+                return (null, str);
+            }
+            foreach (char c in str)
+            {
+                if (c == QUOTE)
+                {
+                    return (jsonString, str.Substring(jsonString.Length + 1));
+                }
+                else
+                {
+                    jsonString += c;
+                }
+            }
+
+            throw new Exception("Expected end-of-string quote");
         }
         public static (bool?, string) LexBool(string str)
         {
