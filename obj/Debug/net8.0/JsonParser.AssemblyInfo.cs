@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JsonParser")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e7d284c18abf37dc459c2261dacddb66a3f1d5f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cbf4fd7b75a26956b5b493a87821e5472c1400b5")]
 [assembly: System.Reflection.AssemblyProductAttribute("JsonParser")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JsonParser")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

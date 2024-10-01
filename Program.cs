@@ -98,6 +98,22 @@ namespace JsonParser
         {
             return (null, str);
         }
+        public static (bool?, string) LexBool(string str)
+        {
+            return (null, str);
+        }
+        public static (int?, string) LexInt(string str)
+        {
+            return (null, str);
+        }
+        public static (float?, string) LexFloat(string str)
+        {
+            return (null, str);
+        }
+        public static (bool?, string) LexNull(string str)
+        {
+            return (null, str);
+        }
 
         public static List<Token> Tokenize(string json)
         {
