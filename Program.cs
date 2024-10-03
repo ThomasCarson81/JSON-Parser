@@ -58,16 +58,18 @@ namespace JsonParser
             return dict;
         }
 
-        public static List<string?> Lex(string str)
+        public static List<object?> Lex(string str)
         {
-            List<string?> tokens = new List<string?>();
+            List<object?> tokens = new List<object?>();
 
             string? jsonString;
-            string myString;
+            object? jsonNumber;
+            bool? jsonBool;
+            bool? jsonNull;
 
             while (str.Length > 0)
             {
-                (jsonString, myString) = LexString(str);
+                (jsonString, str) = LexString(str);
 
                 if (jsonString != null)
                 {
@@ -75,20 +77,46 @@ namespace JsonParser
                     continue;
                 }
 
-                //TODO: Lex Booleans, nulls, etc
+                bool isInt;
+                (jsonNumber, str, isInt) = LexNumber(str);
 
-                if (WHITESPACE.Contains(myString[0]))
+                if (jsonNumber != null)
                 {
-                    myString = myString.Substring(1);
+                    if (isInt)
+                    {
+                        tokens.Add((int)jsonNumber);
+                    }
+                    else
+                    {
+                        tokens.Add((float)jsonNumber);
+                    }
+                    continue;
                 }
-                else if (SYNTAX.Contains(myString[0]))
+
+                (jsonBool, str) = LexBool(str);
+                if (jsonBool != null)
                 {
-                    tokens.Add(Convert.ToString(myString[0]));
-                    myString = myString.Substring(1);
+                    tokens.Add(jsonBool);
+                    continue;
+                }
+                if (jsonNull != null)
+                {
+                    tokens.Add(jsonNull);
+                    continue
+                }
+
+                if (WHITESPACE.Contains(str[0]))
+                {
+                    str = str.Substring(1);
+                }
+                else if (SYNTAX.Contains(str[0]))
+                {
+                    tokens.Add(Convert.ToString(str[0]));
+                    str = str.Substring(1);
                 }
                 else
                 {
-                    throw new Exception($"Unexpected character: {myString[0]}");
+                    throw new Exception($"Unexpected character: {str[0]}");
                 }
             }
             return tokens;
